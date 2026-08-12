@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dinâmica na Física - 2ª Lei de Newton</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Dinâmica na Física</h1>
+    <p>Simulador da Segunda Lei de Newton: <strong>F = m · a</strong></p>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <h2>Controles</h2>
+      
+      <div class="input-group">
+        <label for="force">Força (F): <span id="force-val">10</span> N</label>
+        <input type="range" id="force" min="0" max="100" value="10">
+      </div>
+
+      <div class="input-group">
+        <label for="mass">Massa (m): <span id="mass-val">2</span> kg</label>
+        <input type="range" id="mass" min="1" max="20" value="2">
+      </div>
+
+      <div class="results">
+        <p>Aceleração Calculada (a): <strong id="acc-val">5.00</strong> m/s²</p>
+        <p>Velocidade Atual: <strong id="vel-val">0.00</strong> m/s</p>
+      </div>
+
+      <div class="buttons">
+        <button id="btn-start">Iniciar / Pausar</button>
+        <button id="btn-reset">Resetar</button>
+      </div>
+    </section>
+
+    <section class="simulation-area">
+      <div id="track">
+        <div id="box">Bloco</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
