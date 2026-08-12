@@ -1,0 +1,86 @@
+// Elementos da interface
+const forceInput = document.getElementById('force');
+const massInput = document.getElementById('mass');
+const forceVal = document.getElementById('force-val');
+const massVal = document.getElementById('mass-val');
+const accVal = document.getElementById('acc-val');
+const velVal = document.getElementById('vel-val');
+
+const btnStart = document.getElementById('btn-start');
+const btnReset = document.getElementById('btn-reset');
+const box = document.getElementById('box');
+const track = document.getElementById('track');
+
+// Variáveis da física
+let position = 0;
+let velocity = 0;
+let acceleration = 0;
+let isRunning = false;
+let animationId = null;
+let lastTime = null;
+
+// Atualiza os cálculos de física baseados nos sliders
+function updatePhysics() {
+  const force = parseFloat(forceInput.value);
+  const mass = parseFloat(massInput.value);
+
+  // F = m * a  =>  a = F / m
+  acceleration = force / mass;
+
+  // Atualiza textos na tela
+  forceVal.textContent = force;
+  massVal.textContent = mass;
+  accVal.textContent = acceleration.toFixed(2);
+}
+
+// Loop de animação
+function animate(time) {
+  if (!lastTime) lastTime = time;
+  const dt = (time - lastTime) / 1000; // Converte milissegundos para segundos
+  lastTime = time;
+
+  if (isRunning) {
+    // Atualiza velocidade: v = v0 + a * t
+    velocity += acceleration * dt;
+    // Atualiza posição: S = S0 + v * t
+    position += velocity * dt * 50; // Factor de escala para visualização em pixels
+
+    // Limite da pista
+    const maxPosition = track.clientWidth - box.clientWidth;
+    if (position >= maxPosition) {
+      position = maxPosition;
+      isRunning = false; // Para ao chegar ao final
+    }
+
+    // Aplica no elemento HTML
+    box.style.left = `${position}px`;
+    velVal.textContent = (velocity).toFixed(2);
+
+    animationId = requestAnimationFrame(animate);
+  }
+}
+
+// Eventos dos Controles
+forceInput.addEventListener('input', updatePhysics);
+massInput.addEventListener('input', updatePhysics);
+
+btnStart.addEventListener('click', () => {
+  isRunning = !isRunning;
+  if (isRunning) {
+    lastTime = null;
+    animationId = requestAnimationFrame(animate);
+  }
+});
+
+btnReset.addEventListener('click', () => {
+  isRunning = false;
+  cancelAnimationFrame(animationId);
+  position = 0;
+  velocity = 0;
+  box.style.left = '0px';
+  velVal.textContent = '0.00';
+  lastTime = null;
+});
+
+// Inicialização
+updatePhysics();
