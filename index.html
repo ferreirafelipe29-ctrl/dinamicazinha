@@ -17,6 +17,7 @@
     <section class="controls">
       <h2>Controles</h2>
       
+      <!-- Controles da Segunda Lei de Newton -->
       <div class="input-group">
         <label for="force">Força (F): <span id="force-val">10</span> N</label>
         <input type="range" id="force" min="0" max="100" value="10">
@@ -27,9 +28,26 @@
         <input type="range" id="mass" min="1" max="20" value="2">
       </div>
 
+      <!-- Controles do Impacto no Vidro -->
+      <div class="input-group controle-vidro">
+        <label for="tipoVidro">Tipo de Vidro:</label>
+        <select id="tipoVidro">
+          <option value="40000000">Vidro Comum (40 MPa)</option>
+          <option value="120000000">Vidro Temperado (120 MPa)</option>
+          <option value="200000000">Vidro Blindado Leve (200 MPa)</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="areaContato">Área do Impacto (cm²):</label>
+        <input type="number" id="areaContato" value="10" min="1" step="1">
+      </div>
+
+      <!-- Leituras do Simulador -->
       <div class="results">
         <p>Aceleração Calculada (a): <strong id="acc-val">5.00</strong> m/s²</p>
         <p>Velocidade Atual: <strong id="vel-val">0.00</strong> m/s</p>
+        <p>Status do Vidro: <strong id="resultadoImpacto">Vidro Intacto</strong></p>
       </div>
 
       <div class="buttons">
@@ -38,36 +56,17 @@
       </div>
     </section>
 
+    <!-- Área de Animação -->
     <section class="simulation-area">
-      <div id="track">
+      <div id="track" class="cenario">
         <div id="box">Bloco</div>
+        <div id="vidro" class="vidro-intacto">
+          <span>Vidro</span>
+        </div>
       </div>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
-
-<!-- Adicionar junto aos seus controles existentes (Massa e Força) -->
-<div class="controle-vidro">
-  <label for="tipoVidro">Tipo de Vidro:</label>
-  <select id="tipoVidro">
-    <option value="40000000">Vidro Comum (40 MPa)</option>
-    <option value="120000000">Vidro Temperado (120 MPa)</option>
-    <option value="200000000">Vidro Blindado Leve (200 MPa)</option>
-  </select>
-
-  <label for="areaContato">Área do Impacto ($cm^2$):</label>
-  <input type="number" id="areaContato" value="10" min="1" step="1">
-</div>
-
-<!-- Adicionar no container onde o bloco se move -->
-<div class="cenario">
-  <div id="bloco">Bloco</div>
-  <div id="vidro" class="vidro-intacto">
-    <span>Vidro</span>
-  </div>
-</div>
-
-<p id="resultadoImpacto">Status: Vidro Intacto</p>
