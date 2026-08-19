@@ -84,3 +84,17 @@ btnReset.addEventListener('click', () => {
 
 // Inicialização
 updatePhysics();
+
+// Resistência do vidro em Pascals (N/m²)
+// Vidro Comum ~ 40,000,000 Pa (40 MPa)
+const RESISTENCIA_VIDRO = 40000000; 
+
+function checarRuptura(massa, aceleracao, areaContatoMetrosQuadrados) {
+  const forca = massa * aceleracao; // F = m * a
+  const pressaoExercida = forca / areaContatoMetrosQuadrados; // P = F / A
+
+  if (pressaoExercida >= RESISTENCIA_VIDRO) {
+    return { quebrou: true, pressao: pressaoExercida };
+  }
+  return { quebrou: false, pressao: pressaoExercida };
+}
