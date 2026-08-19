@@ -48,3 +48,26 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+<!-- Adicionar junto aos seus controles existentes (Massa e Força) -->
+<div class="controle-vidro">
+  <label for="tipoVidro">Tipo de Vidro:</label>
+  <select id="tipoVidro">
+    <option value="40000000">Vidro Comum (40 MPa)</option>
+    <option value="120000000">Vidro Temperado (120 MPa)</option>
+    <option value="200000000">Vidro Blindado Leve (200 MPa)</option>
+  </select>
+
+  <label for="areaContato">Área do Impacto ($cm^2$):</label>
+  <input type="number" id="areaContato" value="10" min="1" step="1">
+</div>
+
+<!-- Adicionar no container onde o bloco se move -->
+<div class="cenario">
+  <div id="bloco">Bloco</div>
+  <div id="vidro" class="vidro-intacto">
+    <span>Vidro</span>
+  </div>
+</div>
+
+<p id="resultadoImpacto">Status: Vidro Intacto</p>
