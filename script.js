@@ -98,3 +98,59 @@ function checarRuptura(massa, aceleracao, areaContatoMetrosQuadrados) {
   }
   return { quebrou: false, pressao: pressaoExercida };
 }
+
+.cenario {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  background-color: #f4f4f4;
+  border-bottom: 4px solid #333;
+  overflow: hidden;
+}
+
+#bloco {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  background-color: #ff5722;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Parede de Vidro */
+#vidro {
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  width: 20px;
+  height: 120px;
+  transition: all 0.2s ease;
+}
+
+.vidro-intacto {
+  background: rgba(0, 191, 255, 0.4);
+  border: 2px solid rgba(0, 191, 255, 0.8);
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+/* Estado de Vidro Quebrado */
+.vidro-quebrado {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Efeito visual de cacos no chão */
+.vidro-quebrado::before {
+  content: '💥 ░ ▒ ▓';
+  font-size: 20px;
+  position: absolute;
+  bottom: 0;
+  left: -10px;
+  color: #00bfff;
+}
