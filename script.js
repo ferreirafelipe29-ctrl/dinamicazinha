@@ -107,3 +107,72 @@ function checarRuptura(massa, aceleracao, areaContatoMetrosQuadrados) {
   border-bottom: 4px solid #333;
   overflow: hidden;
 }
+
+// Captura dos elementos HTML
+const elBloco = document.getElementById('bloco');
+const elVidro = document.getElementById('vidro');
+const elResultado = document.getElementById('resultadoImpacto');
+const inputTipoVidro = document.getElementById('tipoVidro');
+const inputArea = document.getElementById('areaContato');
+
+// Exemplo das suas variáveis de controle existentes
+let posicaoBloco = 0;
+let velocidade = 0;
+let animacaoId = null;
+
+function simularMovimento(massa, forca) {
+  // 1. Segunda Lei de Newton: a = F / m
+  const aceleracao = forca / massa;
+
+  // 2. Cálculo da Pressão no Impacto: P = F / A
+  // Converte área de cm² para m² (dividir por 10.000)
+  const areaMetrosQuadrados = parseFloat(inputArea.value) / 10000;
+  const pressaoExercida = forca / areaMetrosQuadrados; // em Pascals (Pa)
+  const resistenciaVidro = parseFloat(inputTipoVidro.value);
+
+  // Posição onde o impacto acontece (em pixels)
+  const limiteImpacto = 300; 
+
+  function atualizarLoop() {
+    velocidade += aceleracao * 0.016; // Incremento por frame (~60fps)
+    posicaoBloco += velocidade;
+
+    elBloco.style.left = `${posicaoBloco}px`;
+
+    // Checa colisão do bloco com o vidro
+    if (posicaoBloco >= limiteImpacto) {
+      cancelAnimationFrame(animacaoId);
+      processarImpacto(pressaoExercida, resistenciaVidro, forca);
+      return;
+    }
+
+    animacaoId = requestAnimationFrame(atualizarLoop);
+  }
+
+  animacaoId = requestAnimationFrame(atualizarLoop);
+}
+
+function processarImpacto(pressao, resistencia, forca) {
+  const pressaoMPa = (pressao / 1000000).toFixed(2);
+  const resistenciaMPa = (resistencia / 1000000).toFixed(2);
+
+  if (pressao >= resistencia) {
+    elVidro.className = 'vidro-quebrado';
+    elResultado.innerHTML = `<strong>O VIDRO QUEBROU!</strong><br>
+      Pressão aplicada: ${pressaoMPa} MPa | Resistência: ${resistenciaMPa} MPa`;
+  } else {
+    elVidro.className = 'vidro-intacto';
+    elResultado.innerHTML = `<strong>O VIDRO RESISTIU!</strong><br>
+      Pressão aplicada: ${pressaoMPa} MPa | Resistência necessária: ${resistenciaMPa} MPa`;
+  }
+}
+
+// Botão de reset
+function resetarSimulacao() {
+  cancelAnimationFrame(animacaoId);
+  posicaoBloco = 0;
+  velocidade = 0;
+  elBloco.style.left = '0px';
+  elVidro.className = 'vidro-intacto';
+  elResultado.textContent = 'Status: Aguardando simulação...';
+}
