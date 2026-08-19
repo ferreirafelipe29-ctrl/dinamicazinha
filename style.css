@@ -126,7 +126,7 @@ button:hover {
 /* Parede de Vidro */
 #vidro {
   position: absolute;
-  right: 50px;
+  right: 25px;
   bottom: 0;
   width: 20px;
   height: 120px;
